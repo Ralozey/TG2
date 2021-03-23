@@ -1,0 +1,15 @@
+  
+{
+    "compilerOptions": {
+      "target": "es5",
+      "module": "esnext",
+      "moduleResolution": "node",
+      "jsx": "react",
+      "removeComments": true,                
+      "downlevelIteration": true,          
+      "strict": true,                         
+      "esModuleInterop": true,                 
+      "skipLibCheck": true,                    
+      "forceConsistentCasingInFileNames": true
+    }
+}

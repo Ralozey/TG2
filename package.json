@@ -1,0 +1,31 @@
+{
+  "name": "tg2",
+  "version": "1.0.0",
+  "description": "A rewrite of the TestingGrounds clinet",
+  "main": "dist/server/index.js",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.19.0",
+    "@typescript-eslint/parser": "^4.19.0",
+    "copy-webpack-plugin": "^8.1.0",
+    "eslint": "^7.22.0",
+    "eslint-plugin-react": "^7.23.0",
+    "ts-loader": "^8.0.18",
+    "typescript": "^4.2.3",
+    "webpack": "^5.27.2",
+    "webpack-cli": "^4.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bs": "npx webpack && tsc && node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoogleFeud/TG2.git"
+  },
+  "author": "GoogleFeud",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/GoogleFeud/TG2/issues"
+  },
+  "homepage": "https://github.com/GoogleFeud/TG2#readme"
+}

@@ -12,7 +12,7 @@ export default (): void => {
 
     new WebSocketServer("/api/gateway", server);
 
-    app.use(Express.static(__dirname + "/../../frontend/public"));
+    app.use(Express.static(path.resolve(__dirname + "/../../../frontend/public")));
     app.use(Express.json());
     app.use(Express.urlencoded({extended: false}));
     app.use(CookieParser());

@@ -4,10 +4,14 @@ import http from "http";
 import CookieParser from "cookie-parser";
 import path from "path";
 import { getFiles } from "../utils";
+import {WebSocketServer} from "../websocket";
 
 export default (): void => {
     const app = Express();
     const server = http.createServer(app);
+
+    new WebSocketServer("/api/gateway", server);
+
     app.use(Express.static(__dirname + "/../../frontend/public"));
     app.use(Express.json());
     app.use(Express.urlencoded({extended: false}));

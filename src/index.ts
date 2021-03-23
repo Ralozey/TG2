@@ -1,3 +1,6 @@
 
+import createServer from "./backend/server";
 
-console.log("Hello World");
+(() => {
+    createServer();
+})();

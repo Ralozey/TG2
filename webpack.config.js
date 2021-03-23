@@ -11,7 +11,7 @@ module.exports = {
         rules: [{
             test: /\.tsx?$/,
             use: "ts-loader",
-            include: [path.resolve(__dirname, "src/frontend"), path.resolve(__dirname, "src/shared")]
+            include: [path.resolve(__dirname, "src/frontend")]
         }]
     },
     resolve: {

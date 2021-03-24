@@ -22,8 +22,11 @@ export const App: React.FunctionComponent = () => {
                 <GlobalStyles />
                 <Switch>
                     {routes.map(route => 
-                        <Route key={route.path} path={route.path} exact={route.exact} render={route.component}>
-
+                        <Route key={route.path} path={route.path} exact={route.exact}>
+                            <route.component setTheme={(val: number) => {
+                                setTheme(val);
+                                localStorage.setItem("theme", val.toString());
+                            }}></route.component>
                         </Route>)}
                 </Switch>
             </ThemeProvider>
@@ -36,4 +39,9 @@ export interface IRoute {
     exact?: boolean,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     component: any
+}
+
+export interface GeneralProps {
+    setTheme: (themeId: number) => void,
+    className?: string
 }

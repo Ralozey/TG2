@@ -33,6 +33,10 @@ module.exports = {
                     from: path.resolve(__dirname, "package.json"),
                     to: path.resolve(__dirname, "dist")
                 },
+                {
+                    from: path.resolve(__dirname, "src/frontend/assets"),
+                    to: path.resolve(__dirname, "dist/frontend/public/assets")
+                }
             ] 
         })
     ]

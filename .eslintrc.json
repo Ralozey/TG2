@@ -38,5 +38,6 @@
             "error",
             "always"
         ]
-    }
+    },
+    "react/prop-types": "off"
 }

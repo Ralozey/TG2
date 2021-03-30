@@ -1,7 +1,7 @@
 import { Engine } from "..";
 import { Collection } from "../../utils/Collection";
 import { PACKETS } from "../../websocket";
-import { Player } from "../structures/Player";
+import { Player, PlayerData } from "../structures/Player";
 
 
 export class PlayerManager extends Collection<Player> {
@@ -12,9 +12,9 @@ export class PlayerManager extends Collection<Player> {
         this.game = game;
     }
 
-    create(name: string, id: string) : Player {
-        const player = new Player(this.game, name, id);
-        this.set(id, player);
+    create(data: PlayerData) : Player {
+        const player = new Player(this.game, data);
+        this.set(data.id, player);
         return player;
     }
 

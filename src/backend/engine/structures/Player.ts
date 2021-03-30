@@ -8,9 +8,16 @@ export const enum JUDGEMENT_TYPES {
     GUILTY
 }
 
+export interface PlayerData {
+    name: string,
+    id: string,
+    ip: string | null
+}
+
 export class Player {
     name: string
     id: string
+    ip: string | null
     num: number
     game: Engine
     ws: Array<WebSocket>
@@ -20,11 +27,12 @@ export class Player {
     //role
     //action
     dead: boolean
-    constructor(game: Engine, name: string, id: string) {
+    constructor(game: Engine, data: PlayerData) {
         this.game = game;
-        this.id = id;
+        this.id = data.id;
+        this.name = data.name;
+        this.ip = data.ip;
         this.num = game.players.size + 1;
-        this.name = name;
         this.votes = 0;
         this.dead = false;
         this.ws = [];

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { GeneralProps } from "../../App";
 import { Btn, Input, MiddledContainer, MiniHeader } from "../../styles";
 import { post } from "../../utils/requests";
+import { validateName } from "../../utils/validation";
 import { ThemePicker } from "../common/ThemePicker";
 
 const Logo = styled(Image)`
@@ -63,9 +64,9 @@ export const Home: React.FunctionComponent<GeneralProps> = (props) => {
 
 
 const HandleSubmit = async (setError: (err: string|undefined) => void, text: string): Promise<void> => {
-    if (text.length > 16) return setError("Your username cannot be longer than 16 characters");
-    if (text.length < 4) return setError("Your username cannot be shorter than 4 characters");
     if (text === "empty") return setError("Very clever. Truly we are but peons in the shadow of your vast intellect.");
-    const res = await post<void>("/api/game/players", {name: text});
+    const validation = validateName(text);
+    if (validation) return setError(validation);
+    const res = await post<void>("/api/game/players", {name: text.trim()});
     if (res) setError(res.message);
 };

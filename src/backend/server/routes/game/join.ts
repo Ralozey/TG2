@@ -20,8 +20,8 @@ export default {
         playerId = v4();
         res.cookie("__player__", playerId, {httpOnly: true, expires: new Date(Date.now() + 86_400_000)});
         const ip = getClientIp(req);
-        if (game.players.some(p => p.ip === ip)) game.players.broadcast(PACKETS.JOIN, {altOf: (game.players.find(p => p.ip === ip) as Player).name})
-        else game.players.broadcast(PACKETS.JOIN, {});
+        if (game.players.some(p => p.ip === ip)) game.players.broadcast(PACKETS.JOIN, {altOf: game.players.filter(p => p.ip === ip).map(p => p.name), player: name})
+        else game.players.broadcast(PACKETS.JOIN, {player: name});
         game.players.create({name, id: playerId, ip});
         res.sendStatus(204);
     }

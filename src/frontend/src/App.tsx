@@ -5,12 +5,18 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {ThemeList} from "./styles/themes";
 import {GlobalStyles} from "./styles";
 import {Home} from "./components/Home";
+import { Play } from "./components/Play";
 
 const routes: Array<IRoute> = [
     {
         path: "/",
         exact: true,
         component: Home
+    },
+    {
+        path: "/play",
+        exact: true,
+        component: Play
     }
 ];
 

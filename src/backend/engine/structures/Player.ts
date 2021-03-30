@@ -38,6 +38,15 @@ export class Player {
         this.ws = [];
     }
 
+
+    addSocket(socket: WebSocket) : void {
+        const id = this.ws.push(socket) - 1;
+        socket.on("close", () => {
+            this.ws.splice(id, 1);
+            if (!this.ws.length) this.game.emit("disconnect", this);
+        });
+    }
+
     clear() : void {
         this.votes = 0;
         this.dead = false;

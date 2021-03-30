@@ -4,7 +4,9 @@ import http from "http";
 import cookie from "cookie";
 
 export const enum PACKETS {
-    JOIN
+    JOIN,
+    LEAVE,
+    DISCONNECT
 }
 
 export class WebSocketServer extends WebSocket.Server {
@@ -14,8 +16,8 @@ export class WebSocketServer extends WebSocket.Server {
         this.on("connection", (socket, req) => {
             if (!req.headers.cookie) return socket.close();
             const cookies = cookie.parse(req.headers.cookie);
-            if (!cookies.__secret) return socket.close();
-            this.emit("connect", cookies.__secret, socket);
+            if (!cookies.__player__) return socket.close();
+            this.emit("connect", cookies.__player__, socket);
         });
     }
 

@@ -1,7 +1,9 @@
-import { EventEmitter } from "events";
+import EventEmitter from "eventemitter3";
+import { PACKETS } from "../websocket";
 import { PhaseManager } from "./managers/PhaseManager";
 import { PlayerManager } from "./managers/PlayerManager";
 import { Phase } from "./structures/Phase";
+import { Player } from "./structures/Player";
 
 
 export class Engine extends EventEmitter {
@@ -20,6 +22,16 @@ export class Engine extends EventEmitter {
         ]);
         this.players = new PlayerManager(this);
         this.started = false;
+
+        this.on("disconnect", (player: Player) => {
+            if (!this.started) {
+                setTimeout(() => {
+                    if (player.ws.length) return;
+                    this.players.remove(player);
+                    this.players.broadcast(PACKETS.LEAVE, {player: player.name});
+                }, 5000);
+            }
+        });
     }
 
     start(firstPhase: string) : void {

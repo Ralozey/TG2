@@ -1,13 +1,14 @@
 
 import React, { useState } from "react";
 import {Image, Container, Row, Col} from "react-bootstrap";
-import { TEXT } from "sequelize/types";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import { GeneralProps } from "../../App";
 import { Btn, Input, MiddledContainer, MiniHeader } from "../../styles";
 import { post } from "../../utils/requests";
 import { validateName } from "../../utils/validation";
 import { ThemePicker } from "../common/ThemePicker";
+import {History} from "history";
 
 const Logo = styled(Image)`
     margin-bottom: 40px;
@@ -27,6 +28,7 @@ export const Err = styled.p`
 `;
 
 export const Home: React.FunctionComponent<GeneralProps> = (props) => {
+    const history = useHistory();
     const [error, setError] = useState<undefined|string>();
     const [username, setUsername] = useState<string>("");
     return(
@@ -45,12 +47,12 @@ export const Home: React.FunctionComponent<GeneralProps> = (props) => {
                 <Col sm={{offset: 4, span: 4}}>
                 <MiniHeader>Username:</MiniHeader>
                 <Input type="text" value={username} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                    if (e.key === "Enter") HandleSubmit(setError, username);
+                    if (e.key === "Enter") HandleSubmit(history, setError, username);
                 }} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setUsername(e.target.value);
                 }}></Input>
                 {error && <Err>{error}</Err>}
-                <Btn style={{marginTop: "20px"}} onClick={() => HandleSubmit(setError, username)}>Play</Btn>
+                <Btn style={{marginTop: "20px"}} onClick={() => HandleSubmit(history, setError, username)}>Play</Btn>
                 </Col>
             </Row>
             <Row>
@@ -63,10 +65,11 @@ export const Home: React.FunctionComponent<GeneralProps> = (props) => {
 };
 
 
-const HandleSubmit = async (setError: (err: string|undefined) => void, text: string): Promise<void> => {
+const HandleSubmit = async (history: History, setError: (err: string|undefined) => void, text: string): Promise<void> => {
     if (text === "empty") return setError("Very clever. Truly we are but peons in the shadow of your vast intellect.");
     const validation = validateName(text);
     if (validation) return setError(validation);
     const res = await post<void>("/api/game/players", {name: text.trim()});
-    if (res) setError(res.message);
+    if (res) return setError(res.message);
+    history.push("/play");
 };

@@ -2,7 +2,6 @@ import { Engine } from "..";
 import { Collection } from "../../utils/Collection";
 import { PACKETS } from "../../websocket";
 import { Player, PlayerData } from "../structures/Player";
-import WebSocket from "ws";
 
 export class PlayerManager extends Collection<Player> {
     game: Engine
@@ -23,11 +22,6 @@ export class PlayerManager extends Collection<Player> {
             if (player.num > left.num) player.num--;
         }
         this.delete(left.id);
-    }
-
-    onConnect(id: string, socket: WebSocket) : void {
-        if (!this.has(id)) return socket.close();
-        (this.get(id) as Player).addSocket(socket);
     }
 
     broadcast(packet: PACKETS, content: any) : void {

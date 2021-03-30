@@ -1,10 +1,8 @@
 
 export class Bitfield {
     bits: number
-    private changeCb: (value: number) => void
-    constructor(bits = 0, changeCb: (value: number) => void) {
+    constructor(bits = 0) {
         this.bits = bits;
-        this.changeCb = changeCb;
     }
 
     has(bit: number|Array<number>) : boolean {
@@ -18,7 +16,6 @@ export class Bitfield {
             total |= bit;
         }
         this.bits |= total;
-        this.changeCb(this.bits);
     } 
 
     remove(...bits: Array<number>) : void {
@@ -27,7 +24,6 @@ export class Bitfield {
             total |= bit;
         }
         this.bits &= ~total;
-        this.changeCb(this.bits);
     } 
 
 }

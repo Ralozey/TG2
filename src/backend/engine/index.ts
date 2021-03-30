@@ -2,9 +2,17 @@ import EventEmitter from "eventemitter3";
 import { PACKETS } from "../websocket";
 import { PhaseManager } from "./managers/PhaseManager";
 import { PlayerManager } from "./managers/PlayerManager";
-import { Phase } from "./structures/Phase";
-import { Player } from "./structures/Player";
+import { Phase, PhaseView } from "./structures/Phase";
+import { Player, PlayerView } from "./structures/Player";
+import WebSocket from "ws";
+import { sendToSocket } from "../utils";
 
+export interface EngineView {
+    started: number,
+    players: Array<PlayerView>
+    currentPhase?: PhaseView,
+    thisPlayerId?: string
+}
 
 export class Engine extends EventEmitter {
     phases: PhaseManager 
@@ -28,10 +36,24 @@ export class Engine extends EventEmitter {
                 setTimeout(() => {
                     if (player.ws.length) return;
                     this.players.remove(player);
-                    this.players.broadcast(PACKETS.LEAVE, {player: player.name});
+                    this.players.broadcast(PACKETS.LEAVE, {player: player.toView()});
                 }, 5000);
             }
         });
+    }
+
+    onConnect(id: string, socket: WebSocket) : void {
+        if (!this.players.has(id)) return socket.close();
+        (this.players.get(id) as Player).addSocket(socket);
+        sendToSocket(socket, PACKETS.GAME_DATA, this.toView(id));
+    }
+
+    toView(thisPlayerId?: string) : EngineView {
+        return {
+            started: Number(this.started),
+            players: this.players.map(p => p.toView()),
+            thisPlayerId: thisPlayerId
+        }
     }
 
     start(firstPhase: string) : void {

@@ -1,6 +1,9 @@
 
 import Express from "express";
+import WebSocket from "ws";
 import fs from "fs";
+import { PACKETS } from "../websocket";
+
 
 export function getFiles(folder: string) : Array<string> {
     const filePaths = [];
@@ -17,4 +20,8 @@ export function getFiles(folder: string) : Array<string> {
 export function err(res: Express.Response, code: number, text: string) : void {
     res.statusMessage = text;
     res.sendStatus(code);
+}
+
+export function sendToSocket(socket: WebSocket, event: PACKETS, obj: any) : void {
+    socket.send(JSON.stringify({e: event, d: obj}));
 }

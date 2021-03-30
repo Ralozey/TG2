@@ -8,6 +8,11 @@ export interface PhaseObj {
     iterations?: number
 }
 
+export interface PhaseView {
+    name: string,
+    timeLeft: {seconds: number, minutes: number}
+}
+
 export class Phase {
     private scheduled: Scheduler
     name: string

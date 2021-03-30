@@ -4,6 +4,7 @@ import http from "http";
 import cookie from "cookie";
 
 export const enum PACKETS {
+    GAME_DATA,
     JOIN,
     LEAVE,
     DISCONNECT

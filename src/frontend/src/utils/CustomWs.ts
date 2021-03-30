@@ -26,6 +26,10 @@ export class CustomWs extends EventEmitter {
     listen(e: number, cb: (...args: Array<any>) => void) {
         this.on(e.toString(), cb);
     }
+
+    deaf(e: number, cb: (...args: Array<any>) => void) {
+        this.removeListener(e.toString(), cb);
+    }
 }
 
 export interface WSPacket {

@@ -1,6 +1,6 @@
 
 import {DataTypes, Model} from "sequelize";
-import { Bitfield } from "../../utils/Bitfield";
+import { CbBitfield } from "../../utils/CallbackBitfield";
 import Instance from "../instance";
 
 export const enum ROLE_FLAGS {
@@ -17,7 +17,7 @@ export interface RoleData {
     code: string,
     priority?: number,
     targets?: number,
-    flags: Bitfield
+    flags: CbBitfield
 }
 
 export interface RoleModel extends Model {
@@ -29,8 +29,8 @@ export interface RoleModel extends Model {
     code: string,
     priority: number,
     targets: number,
-    flags: Bitfield,
-    _flags: Bitfield
+    flags: CbBitfield,
+    _flags: CbBitfield
 }
 
 
@@ -75,8 +75,8 @@ export const Roles = Instance.define<RoleModel>("roles", {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
-        get(): Bitfield {
-            if (!this._flags) this._flags = new Bitfield(this.getDataValue("flags"), (val) => this.setDataValue("flags", val));
+        get(): CbBitfield {
+            if (!this._flags) this._flags = new CbBitfield(this.getDataValue("flags"), (val) => this.setDataValue("flags", val));
             return this._flags;
         },
         set(val: number) : number {

@@ -1,5 +1,5 @@
 
-import {Phase, PhaseObj} from "../structures/Phase";
+import {Phase, PhaseObj, PhaseView} from "../structures/Phase";
 import {Collection} from "../../utils/Collection";
 import { Engine } from "..";
 
@@ -66,6 +66,13 @@ export class PhaseManager extends Collection<Phase> {
             secs = 0;
         }
         return { minutes: mins, seconds: secs };
+    }
+
+    toView() : PhaseView {
+        return {
+            name: this.current.name,
+            timeLeft: this.timeLeft()
+        }
     }
 
     clear() : void {

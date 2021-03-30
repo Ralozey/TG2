@@ -1,8 +1,8 @@
-import { ApiEndpoint } from "..";
+import { ApiEndpoint } from "../../";
 
 export default {
-    method: "get",
-    path: "/api/test",
+    method: "post",
+    path: "/api/game/players",
     exec: (req, res) => {
         res.send("Test!");
     }

@@ -1,10 +1,12 @@
 import { EventEmitter } from "events";
 import { PhaseManager } from "./managers/PhaseManager";
+import { PlayerManager } from "./managers/PlayerManager";
 import { Phase } from "./structures/Phase";
 
 
 export class Engine extends EventEmitter {
     phases: PhaseManager 
+    players: PlayerManager
     started: boolean
     constructor() {
         super();
@@ -16,6 +18,7 @@ export class Engine extends EventEmitter {
             {name: "Judgement", next: "Last Words", duration: 15_000},
             {name: "Last Words", next: "Night", duration: 10_000}
         ]);
+        this.players = new PlayerManager(this);
         this.started = false;
     }
 

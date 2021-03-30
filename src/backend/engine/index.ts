@@ -28,5 +28,4 @@ export class Engine extends EventEmitter {
         this.phases.move(this.phases.get(firstPhase) as Phase);
     }
 
-
 }

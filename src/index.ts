@@ -2,6 +2,7 @@ import env from "dotenv";
 env.config();
 import createServer from "./backend/server";
 import {sync} from "./backend/database";
+import { Engine } from "./backend/engine";
 
 /** 
 import {Engine} from "./backend/engine";
@@ -49,5 +50,6 @@ game.start("Day 0");
 
 (async () => {
     await sync();
-    createServer();
+    const Game = new Engine();
+    createServer(Game);
 })();

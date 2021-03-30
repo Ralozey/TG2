@@ -3,6 +3,10 @@ import WebSocket from "ws";
 import http from "http";
 import cookie from "cookie";
 
+export const enum PACKETS {
+    JOIN
+}
+
 export class WebSocketServer extends WebSocket.Server {
     constructor(path: string, server: http.Server) {
         super({server, path});

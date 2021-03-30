@@ -1,9 +1,11 @@
 
 import React, { useState } from "react";
 import {Image, Container, Row, Col} from "react-bootstrap";
+import { TEXT } from "sequelize/types";
 import styled from "styled-components";
 import { GeneralProps } from "../../App";
 import { Btn, Input, MiddledContainer, MiniHeader } from "../../styles";
+import { post } from "../../utils/requests";
 import { ThemePicker } from "../common/ThemePicker";
 
 const Logo = styled(Image)`
@@ -39,7 +41,7 @@ export const Home: React.FunctionComponent<GeneralProps> = (props) => {
                 </Col>
             </Row>
             <Row>
-                <Col>
+                <Col sm={{offset: 4, span: 4}}>
                 <MiniHeader>Username:</MiniHeader>
                 <Input type="text" value={username} onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                     if (e.key === "Enter") HandleSubmit(setError, username);
@@ -59,7 +61,11 @@ export const Home: React.FunctionComponent<GeneralProps> = (props) => {
     );
 };
 
-const HandleSubmit = (setError: (err: string|undefined) => void, text: string): void => {
-    setError("Some error idk");
-    console.log(text);
+
+const HandleSubmit = async (setError: (err: string|undefined) => void, text: string): Promise<void> => {
+    if (text.length > 16) return setError("Your username cannot be longer than 16 characters");
+    if (text.length < 4) return setError("Your username cannot be shorter than 4 characters");
+    if (text === "empty") return setError("Very clever. Truly we are but peons in the shadow of your vast intellect.");
+    const res = await post<void>("/api/game/players", {name: text});
+    if (res) setError(res.message);
 };

@@ -5,8 +5,9 @@ import CookieParser from "cookie-parser";
 import path from "path";
 import { getFiles } from "../utils";
 import {WebSocketServer} from "../websocket";
+import { Engine } from "../engine";
 
-export default (): void => {
+export default (game: Engine): void => {
     const app = Express();
     const server = http.createServer(app);
 
@@ -22,7 +23,7 @@ export default (): void => {
         // eslint-disable-next-line @typescript-eslint/no-var-requires
         const endpoint = require(filePath).default as ApiEndpoint;
         console.log(`[Express] Route [${endpoint.method}] [${endpoint.path}] loaded!`);
-        app[endpoint.method](endpoint.path, endpoint.exec);
+        app[endpoint.method](endpoint.path, endpoint.exec.bind(null, game));
     }
 
     app.get("*", async (req, res) => {
@@ -36,6 +37,6 @@ export default (): void => {
 
 export interface ApiEndpoint {
     method: "get"|"post"|"delete"|"patch",
-    exec: (req: Express.Request, res: Express.Response) => void,
+    exec: (game: Engine, req: Express.Request, res: Express.Response) => void,
     path: string
 }

@@ -1,5 +1,9 @@
-
+import env from "dotenv";
+env.config();
 import createServer from "./backend/server";
+import {sync} from "./backend/database";
+
+/** 
 import {Engine} from "./backend/engine";
 import { Phase } from "./backend/engine/structures/Phase";
 
@@ -41,7 +45,9 @@ setInterval(() => {
 }, 2000);
 
 game.start("Day 0");
+*/
 
-(() => {
+(async () => {
+    await sync();
     createServer();
 })();

@@ -18,7 +18,7 @@ export class WebSocketServer extends WebSocket.Server {
             if (!req.headers.cookie) return socket.close();
             const cookies = cookie.parse(req.headers.cookie);
             if (!cookies.__player__) return socket.close();
-            this.emit("connect", cookies.__player__, socket);
+            this.emit("connect", cookies.__player__, cookies.__admin__, socket);
         });
     }
 

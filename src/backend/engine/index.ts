@@ -46,9 +46,10 @@ export class Engine extends EventEmitter {
         this.admins = new Set();
     }
 
-    onConnect(id: string, socket: WebSocket) : void {
+    onConnect(id: string, adminId: string|undefined, socket: WebSocket) : void {
         if (!this.players.has(id)) return socket.close();
         const player = this.players.get(id) as Player;
+        if (adminId && this.admins.has(adminId)) player.admin = true;
         player.addSocket(socket);
         sendToSocket(socket, PACKETS.GAME_DATA, this.toView(player.name));
     }

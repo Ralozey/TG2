@@ -13,6 +13,10 @@ const StyledPlayerName = styled.span`
     margin-right: 10px;
 `;
 
+const StyledBadge = styled(Badge)`
+    margin-right: 10px;
+`;
+
 export interface PlayerProps {
     player: PlayerView,
     isThis: boolean
@@ -24,7 +28,8 @@ export const Player: React.FunctionComponent<PlayerProps> = (props) => {
     return(
         <StyledPlayerItem disconnected={flags.has(PLAYER_FLAGS.DISCONNECTED)}>
             <StyledPlayerName>{props.player.num}. {props.player.name}</StyledPlayerName>
-            {props.isThis && <Badge>You</Badge>}
+            {props.isThis && <StyledBadge>You</StyledBadge>}
+            {flags.has(PLAYER_FLAGS.ADMIN) && <StyledBadge>Admin</StyledBadge>}
         </StyledPlayerItem>
     )
 }

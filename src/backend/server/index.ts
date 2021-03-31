@@ -13,8 +13,8 @@ export default (game: Engine): void => {
 
     const socketServer = new WebSocketServer("/api/gateway", server);
 
-    socketServer.on("connect", (id, socket) => {
-        game.onConnect(id, socket);
+    socketServer.on("connect", (id, adminId, socket) => {
+        game.onConnect(id, adminId, socket);
     });
 
     app.use(Express.static(path.resolve(__dirname + "/../../../frontend/public")));

@@ -52,6 +52,16 @@ label:focus,
     box-shadow: none !important;
 }
 
+  .badge {
+    color: ${({theme}) => theme.textColor} !important;
+    background-color: ${({theme}) => theme.buttonColor} !important;
+  }
+
+  .list-group-item {
+    background-color: transparent !important;
+    color: ${({theme}) => theme.textColor} !important;
+  }
+
 `;
 
 export const MiddledContainer = styled(Container)`

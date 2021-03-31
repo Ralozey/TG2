@@ -7,7 +7,7 @@ import { PACKETS } from "../../../../../backend/websocket";
 import {Player} from "./Player";
 
 const PlayerListBox = styled(ListGroup)`
-    border: 2px solid black;
+    border: 2px solid ${({theme}) => theme.borderColor || "black"};
     width: 25vw;
     height: 45vh;
     position: absolute;

@@ -1,11 +1,11 @@
-import { ApiEndpoint } from "../../";
+import { ApiEndpoint } from "../..";
 
 export default {
     method: "get",
-    path: "/api/game/in",
+    path: "/api/me/isAdmin",
     exec: (game, req, res) => {
          if (!req.cookies.__player__) return res.send({in: false});
-         res.send({in: game.players.has(req.cookies.__player__)});
+         res.send({isAdmin: game.admins.has(req.cookies.__admin__)});
     }
 } as ApiEndpoint;
 

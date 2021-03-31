@@ -18,9 +18,7 @@ export interface PlayerData {
 export const enum PLAYER_FLAGS {
     DEAD = 1 << 0,
     DISCONNECTED = 1 << 1,
-    ADMIN = 1 << 2,
-    DEV = 1 << 3,
-    SPECTATOR = 1 << 4
+    SPECTATOR = 1 << 2
 }
 
 export interface PlayerView {
@@ -81,14 +79,6 @@ export class Player {
 
     set disconnected(val: boolean) {
         val ? this.flags.add(PLAYER_FLAGS.DISCONNECTED):this.flags.remove(PLAYER_FLAGS.DISCONNECTED);
-    }
-
-    get admin() {
-        return this.flags.has(PLAYER_FLAGS.ADMIN);
-    }
-
-    set admin(val: boolean) {
-        val ? this.flags.add(PLAYER_FLAGS.ADMIN):this.flags.remove(PLAYER_FLAGS.ADMIN);
     }
 
     get spectator() {

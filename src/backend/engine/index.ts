@@ -17,6 +17,7 @@ export interface EngineView {
 export class Engine extends EventEmitter {
     phases: PhaseManager 
     players: PlayerManager
+    admins: Set<string>
     started: boolean
     constructor() {
         super();
@@ -41,6 +42,8 @@ export class Engine extends EventEmitter {
                 }, 5000);
             }
         });
+        
+        this.admins = new Set();
     }
 
     onConnect(id: string, socket: WebSocket) : void {

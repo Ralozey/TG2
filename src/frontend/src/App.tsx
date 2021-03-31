@@ -6,6 +6,7 @@ import {ThemeList} from "./styles/themes";
 import {GlobalStyles} from "./styles";
 import {Home} from "./components/Home";
 import { Play } from "./components/Play";
+import {Admin} from "./components/Admin";
 
 const routes: Array<IRoute> = [
     {
@@ -17,6 +18,11 @@ const routes: Array<IRoute> = [
         path: "/play",
         exact: true,
         component: Play
+    },
+    {
+        path: "/admin",
+        exact: true,
+        component: Admin
     }
 ];
 

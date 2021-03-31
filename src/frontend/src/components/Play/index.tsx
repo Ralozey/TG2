@@ -19,7 +19,7 @@ export const Play: React.FunctionComponent = () => {
 
     useEffect(() => {
 
-        get<{in: boolean}>("/api/game/in").then(res => {
+        get<{in: boolean}>("/api/me/in").then(res => {
             if (!res || ("code" in res)) return;
             if (!res.in) return history.push("/");
 

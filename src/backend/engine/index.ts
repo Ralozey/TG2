@@ -11,7 +11,7 @@ export interface EngineView {
     started: number,
     players: Array<PlayerView>
     currentPhase?: PhaseView,
-    thisPlayerId?: string
+    thisPlayerName?: string
 }
 
 export class Engine extends EventEmitter {
@@ -32,9 +32,10 @@ export class Engine extends EventEmitter {
         this.started = false;
 
         this.on("disconnect", (player: Player) => {
+            this.players.broadcast(PACKETS.PLAYER_FLAG_UPDATE, {player: player.toView()});
             if (!this.started) {
                 setTimeout(() => {
-                    if (player.ws.length) return;
+                    if (player.ws.length) return this.players.broadcast(PACKETS.PLAYER_FLAG_UPDATE, {player: player.toView()});;
                     this.players.remove(player);
                     this.players.broadcast(PACKETS.LEAVE, {player: player.toView()});
                 }, 5000);
@@ -44,15 +45,16 @@ export class Engine extends EventEmitter {
 
     onConnect(id: string, socket: WebSocket) : void {
         if (!this.players.has(id)) return socket.close();
-        (this.players.get(id) as Player).addSocket(socket);
-        sendToSocket(socket, PACKETS.GAME_DATA, this.toView(id));
+        const player = this.players.get(id) as Player;
+        player.addSocket(socket);
+        sendToSocket(socket, PACKETS.GAME_DATA, this.toView(player.name));
     }
 
-    toView(thisPlayerId?: string) : EngineView {
+    toView(thisPlayerName?: string) : EngineView {
         return {
             started: Number(this.started),
             players: this.players.map(p => p.toView()),
-            thisPlayerId: thisPlayerId
+            thisPlayerName: thisPlayerName
         }
     }
 

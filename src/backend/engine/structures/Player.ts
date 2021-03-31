@@ -1,7 +1,7 @@
 
 import WebSocket from "ws";
 import { Engine } from "..";
-import { Bitfield } from "../../../shared/Bitfield";
+import { Bitfield } from "../../../frontend/src/utils/Bitfield";
 
 export const enum JUDGEMENT_TYPES {
     NEUTRAL,
@@ -61,8 +61,8 @@ export class Player {
         socket.on("close", () => {
             this.ws.splice(this.ws.indexOf(socket), 1);
             if (!this.ws.length) {
-                this.game.emit("disconnect", this);
                 this.disconnected = true;
+                this.game.emit("disconnect", this);
             }
         });
     }

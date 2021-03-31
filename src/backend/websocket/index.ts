@@ -7,7 +7,7 @@ export const enum PACKETS {
     GAME_DATA,
     JOIN,
     LEAVE,
-    DISCONNECT
+    PLAYER_FLAG_UPDATE
 }
 
 export class WebSocketServer extends WebSocket.Server {

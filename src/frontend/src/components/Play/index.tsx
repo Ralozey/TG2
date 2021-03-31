@@ -29,14 +29,6 @@ export const Play: React.FunctionComponent = () => {
                 history.push("/");
             });
 
-            socket.current.listen(PACKETS.JOIN, (data) => {
-                console.log(data);
-            });
-
-            socket.current.listen(PACKETS.LEAVE, (data) => {
-                console.log(data);
-            })
-
             socket.current.listen(PACKETS.GAME_DATA, (data) => {
                 setGame(data);
             });

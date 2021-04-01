@@ -4,8 +4,8 @@ import { CbBitfield } from "../../utils/CallbackBitfield";
 import Instance from "../instance";
 
 export const enum ROLE_FLAGS {
-    ASTRAL_VISITS,
-    DAY_ACTION
+    ASTRAL_VISITS = 1 << 0,
+    DAY_ACTION = 1 << 1
 }
 
 export interface RoleData {

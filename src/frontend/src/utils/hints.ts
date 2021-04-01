@@ -15,10 +15,17 @@ const AllEvents: Array<{name: string, complete: string}> = [
     }
 ];
 
+const Self = ["name", "faction", "alignment", "attack", "defense", "priority"];
+
 export function placeHints(code: string, setCode: (value: string) => void, editor: CodeMirror.Editor) : void {
     if (code.endsWith("on(")) {
         editor.showHint({
             hint: () => ({list: AllEvents.map(e => ({text: e.name, hint: () => setCode(code + e.complete)}))})
+        });
+    } 
+    else if (code.endsWith("self.")) {
+        editor.showHint({
+            hint: () => ({list: Self.map(e => ({text: e, hint: () => setCode(code + e)}))})
         });
     }
 }

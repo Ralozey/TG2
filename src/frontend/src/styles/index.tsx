@@ -63,7 +63,7 @@ label:focus,
   }
 
   .CodeMirror {
-    height: 60vh;
+    height: 70vh;
     margin-left: 20px;
   }
 `;

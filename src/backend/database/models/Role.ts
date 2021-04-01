@@ -15,9 +15,10 @@ export interface RoleData {
     attack: number,
     defense: number,
     code: string,
-    priority?: number,
-    targets?: number,
-    flags: CbBitfield
+    abilities: string,
+    priority: number,
+    targets: number,
+    flags: number
 }
 
 export interface RoleModel extends Model {
@@ -28,6 +29,7 @@ export interface RoleModel extends Model {
     defense: number,
     code: string,
     priority: number,
+    abilities: string,
     targets: number,
     flags: CbBitfield,
     _flags: CbBitfield
@@ -59,6 +61,10 @@ export const Roles = Instance.define<RoleModel>("roles", {
         type: DataTypes.SMALLINT,
         allowNull: false,
         defaultValue: 0
+    },
+    abilities: {
+        type: DataTypes.TEXT,
+        allowNull: false
     },
     code: DataTypes.TEXT,
     priority: {

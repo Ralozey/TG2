@@ -8,11 +8,17 @@ module.exports = {
     entry: "./src/frontend/src/index.tsx",
     mode: "production",
     module: {
-        rules: [{
+        rules: [
+            {
             test: /\.tsx?$/,
             use: "ts-loader",
             include: [path.resolve(__dirname, "src/frontend")]
-        }]
+        },
+        {
+            test: /\.css$/i,
+            use: ["style-loader", "css-loader"],
+        }
+    ]
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"]

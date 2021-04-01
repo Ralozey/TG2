@@ -62,6 +62,10 @@ label:focus,
     color: ${({theme}) => theme.textColor} !important;
   }
 
+  .CodeMirror {
+    height: 60vh;
+    margin-left: 20px;
+  }
 `;
 
 export const MiddledContainer = styled(Container)`
@@ -98,4 +102,11 @@ export const Btn = styled(Button)`
         transform: scale(1.02);
         filter: brightness(90%);
     }
+`;
+
+export const TextArea = styled.textarea` 
+    background-color: transparent !important;
+    color: ${({theme}) => theme.textColor} !important;
+    border-color: ${({theme}) => theme.borderColor} !important;
+    border-radius: .25rem;
 `;

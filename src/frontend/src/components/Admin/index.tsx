@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { get } from "../../utils/requests";
 import { Login } from "./Login";
-
+import {Dashboard} from "./Dashboard";
 
 export const Admin: React.FunctionComponent = () => {
     const [isAdmin, setAdmin] = useState<boolean>(false);
@@ -15,7 +15,7 @@ export const Admin: React.FunctionComponent = () => {
 
     return(
         <div>
-            {isAdmin ? null:<Login onVerify={() => {
+            {isAdmin ? <Dashboard />:<Login onVerify={() => {
                 setAdmin(true);
             }}/>}
         </div>

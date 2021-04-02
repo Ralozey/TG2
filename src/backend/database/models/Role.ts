@@ -8,6 +8,11 @@ export const enum ROLE_FLAGS {
     DAY_ACTION = 1 << 1
 }
 
+export const enum ROLE_GOALS {
+    TOWN,
+    MAFIA
+}
+
 export interface RoleData {
     name: string,
     alignment: string,
@@ -16,8 +21,19 @@ export interface RoleData {
     defense: number,
     code: string,
     abilities: string,
+    goal?: number,
+    goalStr?: string,
     priority: number,
     targets: number,
+    flags: number
+}
+
+export interface RolePreview {
+    name: string,
+    alignment: string,
+    faction: string,
+    goal?: number|string,
+    goalStr?: string,
     flags: number
 }
 
@@ -30,9 +46,12 @@ export interface RoleModel extends Model {
     code: string,
     priority: number,
     abilities: string,
+    goal?: number,
+    goalStr?: string
     targets: number,
     flags: CbBitfield,
-    _flags: CbBitfield
+    _flags: CbBitfield,
+    toPreview() : RolePreview;
 }
 
 
@@ -62,10 +81,9 @@ export const Roles = Instance.define<RoleModel>("roles", {
         allowNull: false,
         defaultValue: 0
     },
-    abilities: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
+    abilities: DataTypes.TEXT,
+    goal: DataTypes.SMALLINT,
+    goalStr: DataTypes.STRING,
     code: DataTypes.TEXT,
     priority: {
         type: DataTypes.SMALLINT,
@@ -93,8 +111,20 @@ export const Roles = Instance.define<RoleModel>("roles", {
     }
 });
 
+Roles.prototype.toPreview = function() {
+    return {
+        name: this.name,
+        faction: this.faction,
+        alignment: this.alignment,
+        abilities: this.abilities,
+        flags: this.flags.bits,
+        goal: this.goal,
+        goalStr: this.goalStr
+    };
+}
 
 const cache = new Map<string, RoleModel>();
+let loadedAll = false;
 
 export const create = async (data: RoleData) : Promise<RoleModel> => {
     const role = await Roles.create(data);
@@ -123,9 +153,12 @@ export const update = async (name: string, data: Partial<RoleData>) : Promise<vo
     }
 }
 
-export const loadAll = async (): Promise<void> => {
+export const loadAll = async (): Promise<Array<RoleModel>> => {
+    if (loadedAll) return [...cache.values()];
     const allRoles = await Roles.findAll();
     for (const role of allRoles) cache.set(role.name, role);
+    loadedAll = true;
+    return allRoles;
 }
 
 export const destroy = async (name: string): Promise<void> => {

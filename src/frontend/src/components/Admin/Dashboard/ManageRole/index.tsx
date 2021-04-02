@@ -14,63 +14,13 @@ import styled from "styled-components";
 import { placeHints } from "../../../../utils/hints";
 import { Err } from "../../../Home";
 import { validateRole } from "../../../../utils/validation";
-import Select from "react-select";
 import { Bitfield } from "../../../../utils/Bitfield";
 import { post } from "../../../../utils/requests";
+import {StyledSelect, StyledCreatable} from "./StyledSelect";
+import { RoleGoalToText } from "../../../../utils";
 
 const InputGroup = styled(Row)`
     margin-bottom: 15px;
-`;
-
-const StyledSelect = styled(Select)`
-    & .Select__control {
-    outline: none;
-    background-color: transparent;
-    color: ${({theme}) => theme.textColor};
-    border-color: ${({theme}) => theme.borderColor}
-    }
-
-    & .Select__control:hover {
-        outline: none;
-    }
-
-    & .Select__control--is-focused {
-        outline: none;
-        border-color: ${({theme}) => theme.borderColor};
-    }
-
-    & .Select__multi-value__remove:hover {
-        background-color: transparent;
-    }
-
-    & .Select__multi-value__label,& .Select__multi-value__remove {
-    outline: none;
-    background-color: ${({theme}) => theme.backgroundColor};
-    color: ${({theme}) => theme.textColor};
-    border-color: ${({theme}) => theme.borderColor};
-    border-radius: 0px;
-    }
-
-    & .Select__multi-value__remove:hover {
-        background-color: ${({theme}) => theme.backgroundColor};
-    }
-
-    & .Select__indicator {
-        color: ${({theme}) => theme.textColor};
-    }
-
-    & .Select__menu,& .Select__option {
-        border-color: ${({theme}) => theme.buttonColor};
-        background-color: ${({theme}) => theme.buttonColor};
-        color: ${({theme}) => theme.textColor};
-        transition: all 2s ease-in-out;
-    }
-
-    & .Select__option:hover {
-        cursor: pointer;
-        filter: brightness(1.1);
-    }
-
 `;
 
 export interface ManageRoleProps {
@@ -81,6 +31,9 @@ const RoleOptions = [
     {value: ROLE_FLAGS.DAY_ACTION, label: "Day Action"},
     {value: ROLE_FLAGS.ASTRAL_VISITS, label: "Astral Visits"}
 ];
+
+const GoalOptions = Object.entries(RoleGoalToText).map(([index, str]) => ({value: index, label: str}));
+
 
 export const ManageRole: React.FunctionComponent<ManageRoleProps> = (props) => {
     const [role, setRole] = useState<Partial<RoleData>>(props.role || {});
@@ -93,7 +46,7 @@ export const ManageRole: React.FunctionComponent<ManageRoleProps> = (props) => {
     return(
         <Container>
             <Row>
-                <Col sm={6} md={6} lg={6}>
+                <Col sm={5} md={5} lg={5}>
                     {error && <Err>{error}</Err>}
                     <InputGroup>
                         <Col>
@@ -148,6 +101,13 @@ export const ManageRole: React.FunctionComponent<ManageRoleProps> = (props) => {
                     }}></StyledSelect>
                     </InputGroup>
 
+                    <InputGroup>
+                    <MiniHeader>Goal Message:</MiniHeader>
+                    <StyledCreatable classNamePrefix="Select" options={GoalOptions} defaultValue={resolveSelectedOptionGoal(role.goal, role.goalStr)} onChange={(selected: {value: number, label: string}) => {
+                        console.log(selected);
+                    }}></StyledCreatable>
+                    </InputGroup>
+
                     <Btn onClick={async () => {
                         const err = validateRole(role);
                         if (err) return setError(err);
@@ -184,4 +144,9 @@ function resolveSelectedOptionsFlags(flags: number) {
     if (bitfield.has(ROLE_FLAGS.DAY_ACTION)) res.push(RoleOptions.find(o => o.value === ROLE_FLAGS.DAY_ACTION));
     if (bitfield.has(ROLE_FLAGS.ASTRAL_VISITS)) res.push(RoleOptions.find(o => o.value === ROLE_FLAGS.ASTRAL_VISITS));
     return res;
+}
+
+function resolveSelectedOptionGoal(goal?: number, goalStr?: string) : {value: string, label: string}|undefined {
+    if (goal && RoleGoalToText[goal]) return GoalOptions.find(g => g.value === goal.toString()) as {value: string, label: string};
+    if (goalStr) return {value: goalStr, label: goalStr};
 }

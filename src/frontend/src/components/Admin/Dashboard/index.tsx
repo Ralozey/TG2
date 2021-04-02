@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import {ManageRole} from "./ManageRole";
+import {AllRoles} from "./AllRoles";
 
 const HeaderBoxContainer = styled(Row)`
     margin-top: 5vh;
@@ -31,6 +32,10 @@ const pages: Array<{name: string, page: any}> = [
     {
         name: "Create Role",
         page: ManageRole
+    },
+    {
+        name: "All Roles",
+        page: AllRoles
     }
 ]
 

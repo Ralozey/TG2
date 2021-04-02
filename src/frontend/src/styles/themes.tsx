@@ -20,7 +20,8 @@ export const White: DefaultTheme = {
     textColor: "#333333",
     backgroundColor: "#ffffff",
     linkColor: "#706c61",
-    buttonColor: "#e1f4f3"
+    buttonColor: "#e1f4f3",
+    boxColor: "#ffffff"
 };
 
 export const TG: DefaultTheme = {
@@ -29,7 +30,8 @@ export const TG: DefaultTheme = {
     backgroundColor: "#000000",
     linkColor: "#FFB502",
     buttonColor: "#4C8900",
-    borderColor: "#FF0080"
+    borderColor: "#FF0080",
+    boxColor: "#131313"
 }
 
 //https://www.color-hex.com/color-palette/25362
@@ -41,7 +43,8 @@ export const Discord: DefaultTheme = {
     buttonColor: "#7289da",
     borderColor: "#7289da",
     linkColor: "#7289da",
-    radioColor: "#7289da"
+    radioColor: "#7289da",
+    boxColor: "#2c2f33"
 };
 
 export const Dark: DefaultTheme = {
@@ -50,7 +53,8 @@ export const Dark: DefaultTheme = {
     linkColor: "#84693b",
     textColor: "#ffffff",
     buttonColor: "#304e60",
-    borderColor: "#141a23"
+    borderColor: "#141a23",
+    boxColor: "#030407"
 };
 
 

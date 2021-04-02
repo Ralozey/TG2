@@ -26,4 +26,5 @@ export const validateRole = (role: Partial<RoleData>) : string|void => {
     if (role.priority < 0) return "Role priority must be a positive number or zero";
     if (role.targets < 0) return "Role targets must be a positive number or zero";
     if (role.abilities && role.abilities.length > 10_000) return "Role abilities summary cannot contain more than 10,000 characters";
+    if (role.goalStr && role.goalStr.length > 256) return "Role goal cannot exceed 256 characters";
 } 

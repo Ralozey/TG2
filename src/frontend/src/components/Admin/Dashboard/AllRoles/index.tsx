@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { RolePreview } from "../../../../../../backend/database/models/Role";
 import { get } from "../../../../utils/requests";
-
-
+import {Rolecard} from "../../../common/Rolecard";
+ 
 export const AllRoles: React.FunctionComponent = () => {
     const [allRoles, setAllRoles] = useState<Array<RolePreview>>([]);
 
@@ -13,11 +13,9 @@ export const AllRoles: React.FunctionComponent = () => {
         })
     }, []);
 
-    console.log(allRoles);
-
     return(
         <div>
-
+            {allRoles.length ? allRoles.map(r => <Rolecard role={r}></Rolecard>):<h2>No roles!</h2>}
         </div>
     )
 }

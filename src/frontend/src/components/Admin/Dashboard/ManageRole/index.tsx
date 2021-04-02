@@ -103,9 +103,17 @@ export const ManageRole: React.FunctionComponent<ManageRoleProps> = (props) => {
 
                     <InputGroup>
                     <MiniHeader>Goal Message:</MiniHeader>
-                    <StyledCreatable classNamePrefix="Select" options={GoalOptions} defaultValue={resolveSelectedOptionGoal(role.goal, role.goalStr)} onChange={(selected: {value: number, label: string}) => {
-                        console.log(selected);
+                    <StyledCreatable classNamePrefix="Select" options={GoalOptions} defaultValue={resolveSelectedOptionGoal(role.goal, role.goalStr)} onChange={(selected: {value: string, label: string}) => {
+                        if (isNaN(+selected.value)) role.goalStr = selected.value;
+                        else role.goal = +selected.value;
                     }}></StyledCreatable>
+                    </InputGroup>
+
+                    <InputGroup>
+                    <MiniHeader>Color:</MiniHeader>
+                    <Input type="color" defaultValue={role.color} onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        role.color = e.target.value;
+                    }}></Input>
                     </InputGroup>
 
                     <Btn onClick={async () => {

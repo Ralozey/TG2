@@ -21,6 +21,7 @@ export interface RoleData {
     defense: number,
     code: string,
     abilities: string,
+    color?: string,
     goal?: number,
     goalStr?: string,
     priority: number,
@@ -31,9 +32,11 @@ export interface RoleData {
 export interface RolePreview {
     name: string,
     alignment: string,
+    abilities: string,
     faction: string,
-    goal?: number|string,
+    goal?: number,
     goalStr?: string,
+    color?: string,
     flags: number
 }
 
@@ -46,6 +49,7 @@ export interface RoleModel extends Model {
     code: string,
     priority: number,
     abilities: string,
+    color?: string,
     goal?: number,
     goalStr?: string
     targets: number,
@@ -68,7 +72,6 @@ export const Roles = Instance.define<RoleModel>("roles", {
     },
     faction: {
         type: DataTypes.STRING,
-        unique: true,
         allowNull: false
     },
     attack: {
@@ -84,6 +87,7 @@ export const Roles = Instance.define<RoleModel>("roles", {
     abilities: DataTypes.TEXT,
     goal: DataTypes.SMALLINT,
     goalStr: DataTypes.STRING,
+    color: DataTypes.STRING,
     code: DataTypes.TEXT,
     priority: {
         type: DataTypes.SMALLINT,
@@ -119,7 +123,8 @@ Roles.prototype.toPreview = function() {
         abilities: this.abilities,
         flags: this.flags.bits,
         goal: this.goal,
-        goalStr: this.goalStr
+        goalStr: this.goalStr,
+        color: this.color
     };
 }
 

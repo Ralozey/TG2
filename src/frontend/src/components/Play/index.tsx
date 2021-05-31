@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import {CustomWs} from "../../utils/CustomWs";
 import {PACKETS} from "../../../../backend/websocket";
 import { get } from "../../utils/requests";
-import {EngineView} from "../../../../backend/engine"
+import {EngineView} from "../../../../backend/engine";
 
 import {PlayerList} from "./PlayerList";
 
@@ -15,7 +15,7 @@ export interface BasePlayProps {
 export const Play: React.FunctionComponent = () => {
     const history = useHistory();
     const socket = useRef<CustomWs|undefined>();
-    const [game, setGame] = useState<EngineView|undefined>()
+    const [game, setGame] = useState<EngineView|undefined>();
 
     useEffect(() => {
 
@@ -44,5 +44,5 @@ export const Play: React.FunctionComponent = () => {
             <p>Play!</p>
             <PlayerList socket={socket} players={game.players} game={game}></PlayerList>
         </div>
-    )
-}
+    );
+};

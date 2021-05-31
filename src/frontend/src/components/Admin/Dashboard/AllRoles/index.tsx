@@ -10,12 +10,12 @@ export const AllRoles: React.FunctionComponent = () => {
         get<Array<RolePreview>>("/api/roles").then(roles => {
             if (!roles || "code" in roles) return;
             setAllRoles(roles);
-        })
+        });
     }, []);
 
     return(
         <div>
-            {allRoles.length ? allRoles.map(r => <Rolecard role={r}></Rolecard>):<h2>No roles!</h2>}
+            {allRoles.length ? allRoles.map(r => <Rolecard key={r.name} role={r}/>):<h2>No roles!</h2>}
         </div>
-    )
-}
+    );
+};

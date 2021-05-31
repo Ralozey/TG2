@@ -10,18 +10,18 @@ module.exports = {
     module: {
         rules: [
             {
-            test: /\.tsx?$/,
-            use: "ts-loader",
-            include: [path.resolve(__dirname, "src/frontend")]
-        },
-        {
-            test: /\.css$/i,
-            use: ["style-loader", "css-loader"],
-        }
-    ]
+                test: /\.tsx?$/,
+                use: "ts-loader",
+                include: [path.resolve(__dirname, "src/frontend")],
+            },
+            {
+                test: /\.css$/i,
+                use: ["style-loader", "css-loader"],
+            },
+        ],
     },
     resolve: {
-        extensions: [".tsx", ".ts", ".js"]
+        extensions: [".tsx", ".ts", ".js"],
     },
     output: {
         filename: "bundle.js",
@@ -33,17 +33,17 @@ module.exports = {
             patterns: [
                 {
                     from: path.resolve(__dirname, "src/frontend/html"),
-                    to: path.resolve(__dirname, "dist/frontend/html")
+                    to: path.resolve(__dirname, "dist/frontend/html"),
                 },
                 {
                     from: path.resolve(__dirname, "package.json"),
-                    to: path.resolve(__dirname, "dist")
+                    to: path.resolve(__dirname, "dist"),
                 },
                 {
                     from: path.resolve(__dirname, "src/frontend/assets"),
-                    to: path.resolve(__dirname, "dist/frontend/public/assets")
-                }
-            ] 
-        })
-    ]
+                    to: path.resolve(__dirname, "dist/frontend/public/assets"),
+                },
+            ], 
+        }),
+    ],
 };

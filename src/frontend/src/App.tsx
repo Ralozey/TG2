@@ -12,18 +12,18 @@ const routes: Array<IRoute> = [
     {
         path: "/",
         exact: true,
-        component: Home
+        component: Home,
     },
     {
         path: "/play",
         exact: true,
-        component: Play
+        component: Play,
     },
     {
         path: "/admin",
         exact: true,
-        component: Admin
-    }
+        component: Admin,
+    },
 ];
 
 export const App: React.FunctionComponent = () => {
@@ -38,7 +38,7 @@ export const App: React.FunctionComponent = () => {
                             <route.component setTheme={(val: number) => {
                                 setTheme(val);
                                 localStorage.setItem("theme", val.toString());
-                            }}></route.component>
+                            }}/>
                         </Route>)}
                 </Switch>
             </ThemeProvider>
